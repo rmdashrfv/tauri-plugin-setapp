@@ -10,6 +10,7 @@ extern "C" {
     fn showReleaseNotesWindowIfNeeded();
     fn showReleaseNotesWindow();
     fn askUserToShareEmail();
+    fn reportUserInteraction();
 }
 
 #[tauri::command]
@@ -39,6 +40,14 @@ fn ask_user_to_share_email() {
     }
 }
 
+#[tauri::command]
+fn report_setapp_user_interaction() {
+    #[cfg(target_os = "macos")]
+    unsafe {
+        reportUserInteraction();
+    }
+}
+
 /// Initializes the plugin.
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     cfg_if::cfg_if! {
@@ -48,7 +57,8 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                 .invoke_handler(tauri::generate_handler![
                     show_release_notes_window_if_needed,
                     show_release_notes_window,
-                    ask_user_to_share_email
+                    ask_user_to_share_email,
+                    report_setapp_user_interaction
                 ])
                 .build()
         } else {

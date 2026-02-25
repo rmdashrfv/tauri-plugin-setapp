@@ -19,3 +19,8 @@ public func showReleaseNotesWindow() -> Void {
 public func askUserToShareEmail() -> Void {
     SetappManager.shared.askUserToShareEmail()
 }
+
+@_cdecl("reportUserInteraction")
+func reportUserInteraction() {
+    SetappManager.shared.reportUsageEvent(.userInteraction)
+}
