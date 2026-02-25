@@ -41,8 +41,15 @@ fn ask_user_to_share_email() {
 }
 
 #[tauri::command]
-fn report_setapp_user_interaction() {
+fn report_setapp_user_interaction_cmd() {
     #[cfg(target_os = "macos")]
+    unsafe {
+        reportUserInteraction();
+    }
+}
+
+#[cfg(target_os = "macos")]
+pub fn report_setapp_user_interaction() {
     unsafe {
         reportUserInteraction();
     }
@@ -58,7 +65,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                     show_release_notes_window_if_needed,
                     show_release_notes_window,
                     ask_user_to_share_email,
-                    report_setapp_user_interaction
+                    report_setapp_user_interaction_cmd
                 ])
                 .build()
         } else {
