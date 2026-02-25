@@ -21,6 +21,6 @@ public func askUserToShareEmail() -> Void {
 }
 
 @_cdecl("reportUserInteraction")
-func reportUserInteraction() {
+public func reportUserInteraction() {
     SetappManager.shared.reportUsageEvent(.userInteraction)
 }
